@@ -2,7 +2,7 @@ from flask import Flask
 app =Flask(__name__)
 @app.route('/')
 def index():
-    return "<h1>#Theyk</h1>"
+    return "<h1>#Theyk fdas</h1>"
 
 class extract:
     def __init__(self):
@@ -49,6 +49,7 @@ class search_engine:
         return self.data_base[searcher]
         
 if __name__ == "__main__":
+    app.run()
     obj=extract()
     file=open("sample.txt")
     text2=file.read()
