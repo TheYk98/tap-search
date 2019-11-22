@@ -2,7 +2,7 @@ from flask import Flask
 app =Flask(__name__)
 @app.route('/')
 def index():
-    return "<h1>#Theyk fdas</h1>"
+    return render_template('index.html')
 
 class extract:
     def __init__(self):
