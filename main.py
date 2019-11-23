@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template
 app =Flask(__name__)
 @app.route('/')
 def index():
@@ -49,13 +49,15 @@ class search_engine:
         return self.data_base[searcher]
         
 if __name__ == "__main__":
+    app.debug=True
     app.run()
+    '''
     obj=extract()
-    file=open("sample.txt")
+    
     text2=file.read()
     obj.split_paragraph(text2)
     text_recog=search_engine(obj.inverted_index)
-    
+    '''
 
 
 
