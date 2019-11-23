@@ -11,20 +11,34 @@
     <div>   
         <h1>Tap Search. Search on-the-go</h1>
     </div>
+    <form action="/index" method="POST">
     <h2>Enter the Text</h2>
-    <span>
-        <textarea rows="40" cols="100"></textarea>
-         
-    </span>
+    <textarea
+        type="text"
+        name="inputtext"
+        placeholder="type here"
+      ></textarea>
+    
     <h2>Enter the Text You want to search</h2>
-     <span><textarea rows="2" cols="100">
-           
-        </textarea>
-        </span>
-    <div>
+    
+    <textarea
+        
+        name="searchtext"
+        placeholder="search"
+      ></textarea>
+      <button>Index</button>
+    
+    </form>
+    <form action="/clear" method="POST">
         <button>Clear </button>
+    </form>
+    
+        
+    
+    <form action="/search" method="POST">
+
         <button>Search</button>
-        <button>Index</button>
-    </div>
+    </form>    
+</body>
 </body>
 </html>

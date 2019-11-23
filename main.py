@@ -1,8 +1,22 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,request
+import json
 app =Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+@app.route('/search', methods=['POST'])
+def submit():
+    if request.method == 'POST':
+        inp_text=str(request.form['inputtext'])
+        find = str(request.form['searchtext'])
+        print(inp_text,find)
+        #print("form",request.form.get)
+        splitter=extract()
+        splitter.split_paragraph(inp_text)
+        finder=search_engine(splitter)
+        
+        return finder.search(find)
+        #return "{sucess:True}"
 
 class extract:
     def __init__(self):
@@ -16,8 +30,7 @@ class extract:
         for tokenize in text:
             self.seperate_text(tokenize,self.index)
             self.index+=1
-
-        
+    
             
     def seperate_text(self,string,index):
         string=string.lower()
@@ -42,11 +55,12 @@ class extract:
 
 class search_engine:
     def __init__(self,db):
-        self.data_base=db
+        self.data_base=db.inverted_index
+        
     def search(self,searcher):
         if searcher not in self.data_base.keys():
             return "{\"error\":\"Not found\"}"
-        return self.data_base[searcher]
+        return json.dumps(self.data_base[searcher])
         
 if __name__ == "__main__":
     app.debug=True
