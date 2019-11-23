@@ -7,8 +7,8 @@ def index():
 @app.route('/search', methods=['POST'])
 def submit():
     if request.method == 'POST':
-        inp_text=str(request.form['inputtext'])
-        find = str(request.form['searchtext'])
+        inp_text=str(request.form.get('inputtext'))
+        find = str(request.form.get('searchtext'))
         print(inp_text,find)
         #print("form",request.form.get)
         splitter=extract()
