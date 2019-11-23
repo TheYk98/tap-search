@@ -15,7 +15,8 @@ def submit():
         splitter.split_paragraph(inp_text)
         finder=search_engine(splitter)
         
-        return finder.search(find)
+        ret=finder.search(find)
+        return json.dumps(ret)
         #return "{sucess:True}"
 
 class extract:
