@@ -5,7 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="/tap chief/styles.css">
+    <style>
+ body{
+      background:#1B1D4F ;
+      color:#fff;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+    h1,h2,.st{text-align: center;}
+    .st{    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    }
+    .btn1{
+      text-decoration: none;
+      color: #fff;
+      padding:20px;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 30px;
+      font-weight: bold;
+      background: linear-gradient(-45deg,#ffa63d,#ff3d77,#338aff);
+      background-size: 600%;
+      border-radius: 90px;
+      position: fixed;
+      border: none;
+
+   left: 46.5%;
+   top:80%;
+      
+    }
+    .btn1:hover{
+      animation: animate 2s linear infinite
+    }
+    @keyframes animate{
+      0%{
+        background-position: 0% 50%;
+      }
+      50%{background-position: 100% 50%;
+      }
+      100%{background-position: 0% 50%;
+      }
+    }
+    .inptxt{
+        display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 400px;
+    width: 500px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    }
+    
+    </style>
 </head>
 <body>
     <div>   
@@ -13,32 +69,25 @@
     </div>
     <form action="/search" method="POST">
     <h2>Enter the Text</h2>
-    <input
-        type="text"
-        name="inputtext"
-        placeholder="type here"
-      />
-    
+        
+        <textarea
+          name="inputtext"
+          class="inptxt"
+          cols="30"
+          rows="10"
+          placeholder="Type here..."
+        ></textarea>
     <h2>Enter the Text You want to search</h2>
     
     <input
         type="text"
         name="searchtext"
+        class="st"
         placeholder="search"
       />
-      <button>Search</button>
+      <button class="btn1">Search</button>
     
     </form>
-<form action="/clear" method="POST">
-        <button>Clear </button>
-    </form>
-    
-        
-    
-    <form action="/index" method="POST">
 
-        <button>Index</button>
-    </form>    
-</body>
 </body>
 </html>

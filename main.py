@@ -1,78 +1,92 @@
 from flask import Flask,render_template,request
 import json
 app =Flask(__name__)
+#DEfault Home page
 @app.route('/')
 def index():
     return render_template('index.html')
+
+#when you start with search
 @app.route('/search', methods=['POST'])
 def submit():
     if request.method == 'POST':
         inp_text=str(request.form.get('inputtext'))
-        find = str(request.form.get('searchtext'))
-        print(inp_text,find)
-        #print("form",request.form.get)
+        find =str(request.form.get('searchtext'))
         splitter=extract()
         splitter.split_paragraph(inp_text)
         finder=search_engine(splitter)
         
-        ret=finder.search(find)
+        ret=finder.search(find.lower())
         return json.dumps(ret)
-        #return "{sucess:True}"
 
 class extract:
     def __init__(self):
         self.index=1
-        self.inverted_index=dict([])
+        self.word_dictionary=dict()
     
         
     def split_paragraph(self,inline_text):
-        #on asuumption that there is an equal spaced paragraph
-        text=inline_text.split("\n\n")
+        
+        text=inline_text.rstrip().split("\r\n")
+        
         for tokenize in text:
+            
+            if tokenize=='':
+                continue
             self.seperate_text(tokenize,self.index)
             self.index+=1
-    
             
-    def seperate_text(self,string,index):
-        string=string.lower()
-        freq=1
-        for token in string.split():
-            #if the token isn't present, add to the dictionary           
-            if token not in self.inverted_index.keys():
-                self.inverted_index[token]=[[index,freq]]
-            #increase the frequency if it belongs to the same para
-            
-            elif index<=len(self.inverted_index[token]) and self.inverted_index[token][index-1][0]==index:
-                self.inverted_index[token]=[[index,self.inverted_index[token][index-1][1]+1]]
-            
-            #else, append the frequency and para id
+        
+    def seperate_text(self,text,ind):
+        text=text.lower()
+        
+        
+        for token in text.split():
+            if token[-1] in [",",".","!",":",";"]:
+                token=token[:-1]
+
+
+            if token not in self.word_dictionary.keys():
+                self.word_dictionary[token]={"paragraph":[ind],"frequency":[1]}
+                
+            elif ind not in self.word_dictionary[token]["paragraph"]:
+                
+                self.word_dictionary[token]["paragraph"].append(ind)
+                self.word_dictionary[token]["frequency"].append(1)
             else:
-                self.inverted_index[token].append([index,freq])
-        #print(self.inverted_index)
-    
+                
+                index_finder=len(self.word_dictionary[token]["frequency"])-1
+                self.word_dictionary[token]["frequency"][index_finder]+=1
+        
     def clear_index(self):
-        self.inverted_index.clear()
-        return self.inverted_index
+        self.word_dictionary.clear()
+        return self.word_dictionary
 
 class search_engine:
+    
     def __init__(self,db):
-        self.data_base=db.inverted_index
-        
+        self.data_base=db.word_dictionary
+        self.not_found={"result":"Not found"}
+   
     def search(self,searcher):
+        #print(self.data_base)
         if searcher not in self.data_base.keys():
-            return "{\"error\":\"Not found\"}"
-        return json.dumps(self.data_base[searcher])
+            return self.not_found
+        
+        return self.data_base[searcher]
         
 if __name__ == "__main__":
+    
     app.debug=True
     app.run()
-    '''
-    obj=extract()
     
-    text2=file.read()
-    obj.split_paragraph(text2)
-    text_recog=search_engine(obj.inverted_index)
-    '''
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
