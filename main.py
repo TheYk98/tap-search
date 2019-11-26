@@ -1,8 +1,17 @@
-from flask import Flask,render_template,request
+'''
+HOW IT WORKS?
+
+-> 
+'''
+
+from flask import Flask,render_template,request,flash,url_for
 import json,os
 from werkzeug.utils import secure_filename
+from features.extract_pdf import pdf2string as p2s
+
+
 app =Flask(__name__)
-#DEfault Home page
+#Default Home page
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -19,18 +28,16 @@ def submit():
         
         ret=finder.search(find.lower())
         return json.dumps(ret)
+
+#file upload happens here and files are stores in github repository
 @app.route("/handleUpload", methods=['POST'])
 def upload_file():
     if request.method == 'POST':
         f = request.files['file']
-        #filename = secure_filename(f.filename)
         f.save(secure_filename(f.filename))
-        
-        
-        
-        
-    return 'file uploaded successfully'
-
+    res=p2s.convert_file(f.filename)
+    
+    return render_template('index.html', disp=res)
 class extract:
     def __init__(self):
         self.index=1
@@ -88,7 +95,7 @@ class search_engine:
         return self.data_base[searcher]
         
 if __name__ == "__main__":
-    
+    app.secret_key = 'Access-TheYk-Tapsearch'
     app.debug=True
     app.run()
     
