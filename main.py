@@ -1,5 +1,6 @@
 from flask import Flask,render_template,request
-import json
+import json,os
+from werkzeug.utils import secure_filename
 app =Flask(__name__)
 #DEfault Home page
 @app.route('/')
@@ -18,6 +19,17 @@ def submit():
         
         ret=finder.search(find.lower())
         return json.dumps(ret)
+@app.route("/handleUpload", methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        f = request.files['file']
+        #filename = secure_filename(f.filename)
+        f.save(secure_filename(f.filename))
+        
+        
+        
+        
+    return 'file uploaded successfully'
 
 class extract:
     def __init__(self):
