@@ -17,6 +17,7 @@ mkdocs==1.0.4
 Naked==0.1.31
 numpy==1.17.2
 pycparser==2.19
+PyPDF2==1.26.0
 PyYAML==5.1.2
 requests==2.22.0
 shellescape==3.4.1
