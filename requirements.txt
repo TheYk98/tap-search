@@ -15,7 +15,7 @@ Markdown==3.1.1
 MarkupSafe==1.1.1
 mkdocs==1.0.4
 Naked==0.1.31
-numpy==1.17.2
+numpy==1.22.0
 pycparser==2.19
 PyPDF2==1.26.0
 PyYAML==5.1.2
